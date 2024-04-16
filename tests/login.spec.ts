@@ -15,5 +15,12 @@ test.describe('Negative scenarios',async ()=>{
     await expect( page.locator('.ant-form-item-explain-error')).toBeVisible();
   })
 
+  test('Required error', async ({page}) => {
+    await page.locator('#normal_login_email').fill('email@email.com');
+    await page.locator('#normal_login_email').clear()
+    await expect( page.locator('.ant-form-item-explain-error')).toBeVisible()
+    await expect( page.locator('.ant-form-item-explain-error')).toHaveCSS('color','rgb(255, 77, 79)')
+  })
+
 })
 

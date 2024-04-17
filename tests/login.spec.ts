@@ -1,12 +1,11 @@
 import { test, expect } from '@playwright/test';
-// @ts-ignore
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
 
+const url = process.env.URL as string
 test.describe('Negative scenarios',async ()=>{
 
   test.beforeEach(async ({page})=>{
-    await page.goto(process.env.URL+'user/login');
+    await page.goto(url+'user/login',{ waitUntil: 'load' });
   })
 
   test('Email is not valid email error',async ({page})=>{

@@ -25,11 +25,5 @@ test.describe('Negative scenarios registration',async ()=>{
             await expect(error).toBeVisible()
             await expect(error).toHaveCSS('color','rgb(255, 77, 79)')
         }
-
-
-
     })
-
-
-
 })

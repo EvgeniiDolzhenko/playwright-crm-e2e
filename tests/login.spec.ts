@@ -31,25 +31,37 @@ test.describe('Negative scenarios',async ()=>{
 
 })
 
-// test.describe('e2e Login with API and setting token',()=>{
-//   let loginPage: LoginPage
+test.describe('Verify api login',()=>{
+  let loginPage: LoginPage
 
-//   test.beforeEach(async ({page})=>{
-//     // 
-//     loginPage = new LoginPage(page)
-//     await loginPage.apiLogin(url, email, pass)
-//   })
+  test.beforeEach(async ({page})=>{
+    loginPage = new LoginPage(page)
+    await loginPage.apiLogin(apiUrl, email, pass,url)
+  })
 
-//   test.only('e2e login',async({page})=>{
-//     await page.goto(url+'client')
-//     expect(page.url()).toContain('/client')
+  test('Verify API login',async({page})=>{
+    await page.goto(url+'client')
+    expect(page.url()).toContain('/client')
+  })
 
-//   })
-// })
+  test('Verify order page',async({page})=>{
+    await page.goto(url+'order')
+    expect(page.url()).toContain('/order')
+  })
 
-test.only('test',async ({page})=>{
-const loginPage = new LoginPage(page)
-await loginPage.apiLogin(apiUrl, email, pass,url)
-await page.goto(url+'client')
+  test('Verify vendor page',async({page})=>{
+    await page.goto(url+'vendor')
+    expect(page.url()).toContain('/vendor')
+  })
 
+  test('Verify service page',async({page})=>{
+    await page.goto(url+'service')
+    expect(page.url()).toContain('/service')
+  })
+
+
+
+  
+ 
 })
+

@@ -21,7 +21,6 @@ export class LoginPage{
                 password:pass 
             }
         })
-     
 
         const responseBody = await response.json()
         const token = responseBody.payload.token
@@ -31,10 +30,20 @@ export class LoginPage{
             localStorage.setItem('token', token);
         }, token);
   
+    }
 
+    async apiLogin2(url:string,email:string,pass:string){
+        const response = await this.page.request.post(url+'/user/login',{
+            data:{
+                email:email,
+                password:pass 
+            }
+        })
 
-    
+        const responseBody = await response.json();
+        const token = responseBody.payload.token;
 
+        return token;
     }
 
 

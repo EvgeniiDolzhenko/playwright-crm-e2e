@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login';
-import { beforeEach, describe } from 'node:test';
 
 require('dotenv').config();
 
@@ -8,12 +7,11 @@ const url = process.env.URL as string
 const apiUrl = process.env.API_URL as string
 const email = process.env.EMAIL as string
 const pass = process.env.PASS as string
+
 test.describe('Negative scenarios',async ()=>{
-  let loginPage: LoginPage
 
   test.beforeEach(async ({page})=>{
-    loginPage = new LoginPage(page)
-    await page.goto(url+'user/login',{ waitUntil: 'load' });
+    await page.goto(url+'user/login');
   })
 
   test('Email is not valid email error',async ({page})=>{
@@ -32,10 +30,9 @@ test.describe('Negative scenarios',async ()=>{
 })
 
 test.describe('Verify api login',()=>{
-  let loginPage: LoginPage
 
   test.beforeEach(async ({page})=>{
-    loginPage = new LoginPage(page)
+    const loginPage = new LoginPage(page)
     await loginPage.apiLogin(apiUrl, email, pass,url)
   })
 
@@ -50,11 +47,15 @@ test.describe('Verify api login',()=>{
   })
 
   test('Verify vendor page',async({page})=>{
+    const loginPage = new LoginPage(page)
+    await loginPage.apiLogin(apiUrl, email, pass,url)
     await page.goto(url+'vendor')
     expect(page.url()).toContain('/vendor')
   })
 
   test('Verify service page',async({page})=>{
+    const loginPage = new LoginPage(page)
+    await loginPage.apiLogin(apiUrl, email, pass,url)
     await page.goto(url+'service')
     expect(page.url()).toContain('/service')
   })

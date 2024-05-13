@@ -1,7 +1,4 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login';
-import { ClientsPage } from '../pages/clients';
-
+import { test, expect } from '../common/test';
 require('dotenv').config();
 
 const url = process.env.URL as string
@@ -10,15 +7,12 @@ const email = process.env.EMAIL as string
 const pass = process.env.PASS as string
 
 test.describe('Create new client',async ()=>{
-    let clientID
-
-    test.beforeEach(async ({page})=>{
-        const loginPage = new LoginPage(page)
+    let clientID : string
+    
+    test.beforeEach(async ({loginPage})=>{
         await loginPage.apiLogin(apiUrl, email, pass,url)
     })
-  
-    test('Create new client',async ({page})=>{
-        const clientsPage = new ClientsPage(page)
+    test('Create new client',async ({page,clientsPage})=>{
         await page.goto(url+'client')
         const response = await page.waitForResponse('**/client/search')
         expect(page.url()).toContain('/client')
@@ -37,8 +31,7 @@ test.describe('Create new client',async ()=>{
         clientID = await newClientBody.payload
         await page.locator(`[href="/v5/client/${clientID}"]`).click()
         expect(page.url()).toContain(clientID)
+        await expect( page.locator('h1',{hasText:'Testing Name'})).toBeVisible()
+        await page.close()
     })
-  
-
-  
   })

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../common/test';
 require('dotenv').config();
 const url = process.env.URL as string
 

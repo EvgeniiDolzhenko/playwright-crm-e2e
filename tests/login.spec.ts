@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login';
+import { test, expect } from '../common/test';
+
 
 require('dotenv').config();
 
@@ -29,13 +29,17 @@ test.describe('Negative scenarios',async ()=>{
     await page.close()
   })
 
+  test.afterEach(async({page})=>{
+    await page.close()
+  })
+
 })
 
 
 test.describe('Verify api login',()=>{
 
-  test.beforeEach(async ({page})=>{
-    const loginPage = new LoginPage(page)
+  test.beforeEach(async ({loginPage})=>{
+    // const loginPage = new LoginPage(page)
     await loginPage.apiLogin(apiUrl, email, pass,url)
   })
 

@@ -43,30 +43,30 @@ test.describe('Verify api login',()=>{
     await page.goto(url+'client')
     const response = await page.waitForResponse('**/client/search')
     expect(page.url()).toContain('/client')
-    console.log(await response.json())
-    await page.close()
+    
   })
 
   test('Verify order page',async({page})=>{
     await page.goto(url+'order')
     await page.waitForResponse('**/order/search')
     expect(page.url()).toContain('/order')
-    await page.close()
   })
 
   test('Verify vendor page',async({page})=>{
     await page.goto(url+'vendor')
     await page.waitForResponse('**/vendor/search')
     expect(page.url()).toContain('/vendor')
-    await page.close()
   })
 
   test('Verify service page',async({page})=>{
     await page.goto(url+'service')
     await page.waitForResponse('**/service/search')
     expect(page.url()).toContain('/service')
-    await page.close()
   })
+
+  test.afterEach(async({page})=>{
+    await page.close()
+})
  
 })
 
